@@ -1,0 +1,29 @@
+apiVersion: admissionregistration.k8s.io/v1
+kind: ValidatingWebhookConfiguration
+metadata:
+  name: validating-label-webhook
+  namespace: admission-controller
+webhooks:
+  - name: label-abriment.admission-controller.svc
+    failurePolicy: Fail
+    sideEffects: None
+    admissionReviewVersions: ["v1","v1beta1"]
+    namespaceSelector:
+      matchLabels:
+        abriment/validation-webhooks: 'enabled'    
+    rules:
+      - apiGroups: ["apps", ""]
+        resources:
+          - "deployments"
+          - "pods"
+          - "statefulsets"
+        apiVersions:
+          - "*"
+        operations:
+          - CREATE
+    clientConfig:
+      service:
+        name: label-abriment
+        namespace: admission-controller
+        path: /validate/
+      caBundle: LS0tLS1CRUdJTiBDRVJUSUZJQ0FURS0tLS0tCk1JSURMVENDQWhXZ0F3SUJBZ0lVSlQ2S293UVlLUFgzd3pyS1ZjOUl6eTRyMkFjd0RRWUpLb1pJaHZjTkFRRUwKQlFBd0pqRWtNQ0lHQTFVRUF3d2JRV0p5YVcxbGJuUWdRMjl1ZEhKdmJHeGxjaUJYWldKb2IyOXJNQjRYRFRJegpNVEV5TVRBM05EZ3pNbG9YRFRJME1URXlNREEzTkRnek1sb3dKakVrTUNJR0ExVUVBd3diUVdKeWFXMWxiblFnClEyOXVkSEp2Ykd4bGNpQlhaV0pvYjI5ck1JSUJJakFOQmdrcWhraUc5dzBCQVFFRkFBT0NBUThBTUlJQkNnS0MKQVFFQXdmRE9OaElQVTZJaW5iY3NJc0E5RnJHVGloeXRJYm9zQ1VWMTEwNWFDekppYUpIZEFlUFJHNjNCbFlQcQp0RzEyYnNZRG1zQ09lc1ZQRVRrR2lnQlRBc1U5ZXFXZmcvcHZkYUFLVXBVMmtFTCtTNHhBRDR6VkpxQVNhdXVXCnpoS0orb0NIOEh2bzIvK2gwczA3MlcxNFVjQ3E1NlQ3bDdRYlhudnM4YlZXaWFhMTVmWlRkZG8wTnBxUDc2d2EKV2daUUg4VThaNDNHTldISXBVa0YyZnozb2FHUUc1VjFzNFoyaDV2TjJiMU1NNHZxNWk4N2FhcDkvK1B6bTZYSwpXVFhQOTBvMFlkc01FNlZSVlRhRXF0cmR1SkY1UE1DL0RxbUpIdldqVEt4SFU3UWdFTU1kNVB0TWsvOWlTU3dNClc3ZVZsSHJoL1FFZUMvNGJKa3hwZHRzNXd3SURBUUFCbzFNd1VUQWRCZ05WSFE0RUZnUVUvVTF3aW1oVFRkOHgKU3dMWTFqNEJwbUZRUFo0d0h3WURWUjBqQkJnd0ZvQVUvVTF3aW1oVFRkOHhTd0xZMWo0QnBtRlFQWjR3RHdZRApWUjBUQVFIL0JBVXdBd0VCL3pBTkJna3Foa2lHOXcwQkFRc0ZBQU9DQVFFQUlSV1Z0VEZQWFg5QVRTSEtxdFJWCjNLSHpLc2FmM2EzeGlVZzZleFBlNjhZYzBZdmgyVUNCRFJ4VFE3bUZLdW9GcjJ6WGFDcFV3TlZScXk2YVpmZHgKTjJsUjM1Qm44bkNmKzlmaHA5K0ZuR2VQbk5lM2VmZ2VzMzF3TkI5cXVkMHJhcTdMN081UUp5QUM2VVUzc1hUSwpnVUJTL2d0THlwR2RWTzdscWpHWXFtWFdudWtjd255VGRDOS9CUjZkMmVaSU1FVWI4VmNPY0xmd2Q4ZkFPSzZaCnNwS3FxVlFKVGVUOVo5QnZlNTRzSmtxVnd2blZ2RzFsbSt5R3FaajR5bUNvbFVnSFFqV1ErS2NzVU5zUU04Zk0KYm42aW9CUlFaQ1VFNU04Sk1oOWNDYS83cGJFaWxNWnBZZXVYVlZLZzNMUVNFVXkrNVhEMDYvZml3aWJrZlBJTApEQT09Ci0tLS0tRU5EIENFUlRJRklDQVRFLS0tLS0K

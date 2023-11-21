@@ -1,0 +1,41 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: validating-label-webhook
+  namespace: admission-controller
+  labels:
+    app: label-webhook
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: label-webhook
+  template:
+    metadata:
+      labels:
+        app: label-webhook
+    spec:
+      containers:
+        - name: webhook-container
+          image: nexus.abriment.local:7072/admission-controller/label:v1
+          imagePullPolicy: Always
+      #     volumeMounts:
+      #       - mountPath: /certs/
+      #         name: webhook-certs
+      #         readOnly: true
+      # volumes:
+      # - name: webhook-certs
+      #   secret:
+      #     secretName: webhook-secret
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: label-abriment
+  namespace: admission-controller
+spec:
+  selector:
+    app: label-webhook
+  ports:
+  - port: 443
+    targetPort: 443
