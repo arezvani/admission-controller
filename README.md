@@ -17,8 +17,6 @@ Specification:
 
 ## How to deploy
 
-### Deploy
-
 - First, we write a flask webservice:
     - Fetches the incoming request object. In our case we can assume the object will always be a Deployment resource when we register our Validating Controller below.
     - Check if the `manage_by` label exists and have `abriment`value . Return a JSON HTTP response if present with the allowed boolean set to True and a message.
