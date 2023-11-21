@@ -22,9 +22,9 @@ Specification:
     - Check if the `manage_by` label exists and have `abriment`value . Return a JSON HTTP response if present with the allowed boolean set to True and a message.
     - If the above condition is not met we will always reject any resources from being created.
 
-- Create a Docker image from validate.py with Flask and jsonify installed with [Dockerfile](./Dockerfile)
+- Create a Docker image from validate.py with Flask and jsonify installed with [Dockerfile](./validate/Dockerfile)
 
-- Generate a self signed CA, generate a csr and cert then create a secret based on this cert. with [certgen.sh](./certgen.sh)
+- Generate a self signed CA, generate a csr and cert then create a secret based on this cert. with [certgen.sh](./validate/certgen.sh)
 
     I use these values:
 
@@ -40,7 +40,7 @@ Specification:
 
 - Create a Service pointing to the correct ports in same namespace as the Deployment.
 
-- Register our [Validating Controller (ValidatingWebhookConfiguration)](./webhook.yaml)
+- Register our [Validating Controller (ValidatingWebhookConfiguration)](./validate/webhook.yaml)
 
 
 ### Test and validate

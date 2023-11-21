@@ -1,0 +1,41 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mutating-image-webhook
+  namespace: admission-controller
+  labels:
+    app: image-webhook
+spec:
+  replicas: 2
+  selector:
+    matchlabels:
+      app: image-webhook
+  template:
+    metadata:
+      labels:
+        app: image-webhook
+    spec:
+      containers:
+        - name: webhook-container
+          image: nexus.abriment.local:7072/admission-controller/image:v1
+          imagePullPolicy: Always
+      #     volumeMounts:
+      #       - mountPath: /certs/
+      #         name: webhook-certs
+      #         readOnly: true
+      # volumes:
+      # - name: webhook-certs
+      #   secret:
+      #     secretName: webhook-secret
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: image-abriment
+  namespace: admission-controller
+spec:
+  selector:
+    app: image-webhook
+  ports:
+  - port: 443
+    targetPort: 443
