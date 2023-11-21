@@ -8,7 +8,7 @@ metadata:
 spec:
   replicas: 2
   selector:
-    matchlabels:
+    matchLabels:
       app: image-webhook
   template:
     metadata:

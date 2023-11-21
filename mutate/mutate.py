@@ -28,7 +28,7 @@ def k8s_response(allowed, uid, message, json_patch):
             "allowed": True,
             "patchType": "JSONPatch",
             "status": {"message": message},
-            "patch": json_patch,
+            "patch": base64_patch,
         },
     })
 
